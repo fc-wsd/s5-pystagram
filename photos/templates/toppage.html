@@ -6,10 +6,25 @@
         <meta charset="utf-8" />
         <title>첫 화면</title>
 
-        <script src="{% static 'hello.js' %}"></script>
+        <!-- <script src="{% static 'hello.js' %}"></script> -->
     </head>
 
-    <body>
-        <p> 첫 화면입니다.</p>
+    <body class="container">
+
+        {% for photo in object_list %}
+
+        <div class="photo_container">
+            <p>
+                <a href="{% url 'photos:view_photo' pk=photo.pk %}">
+                    <img src="{{ photo.image.url }}" />
+                </a>
+            </p>
+            <p>{{ photo.content }}</p>
+        </div>
+
+        {% empty %}
+        <p>게시물이 없네요</p>
+        {% endfor %}
+
     </body>
 </html>

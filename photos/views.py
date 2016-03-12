@@ -1,12 +1,27 @@
 from django.shortcuts import render
+from django.shortcuts import get_object_or_404
 #from django.http import HttpResponse
 
 #from pystagram.middlewares import HelloWorldError
+from .models import Photo
 
 
 def toppage(request):
     #raise HelloWorldError('으악 뭔가 이상해')
     #return HttpResponse('hello world')
 
-    return render(request, 'toppage.html')
+    photos = Photo.objects.order_by('-updated_at')
+    ctx = {
+        'object_list': photos,
+    }
+
+    return render(request, 'toppage.html', ctx)
+
+
+def view_photo(request, pk):
+    photo = get_object_or_404(Photo, pk=pk)
+    ctx = {
+            'photo': photo,
+    }
+    return render(request, 'view_photo.html', ctx)
 
