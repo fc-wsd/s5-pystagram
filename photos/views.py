@@ -1,5 +1,6 @@
 import logging
 
+from django.contrib import messages
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404
 #from django.http import HttpResponse
@@ -12,6 +13,7 @@ logger = logging.getLogger('django')
 
 
 def toppage(request):
+    messages.info(request, '글 목록에 접근하셨습니다.')
     logger.warning('the toppage view is called')
     #raise HelloWorldError('으악 뭔가 이상해')
     #return HttpResponse('hello world')
