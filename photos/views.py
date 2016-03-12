@@ -7,6 +7,7 @@ from django.shortcuts import get_object_or_404
 #from pystagram.middlewares import HelloWorldError
 from .models import Photo
 
+
 logger = logging.getLogger('django')
 
 
