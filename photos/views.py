@@ -1,3 +1,5 @@
+import logging
+
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404
 #from django.http import HttpResponse
@@ -5,8 +7,11 @@ from django.shortcuts import get_object_or_404
 #from pystagram.middlewares import HelloWorldError
 from .models import Photo
 
+logger = logging.getLogger('django')
+
 
 def toppage(request):
+    logger.warning('the toppage view is called')
     #raise HelloWorldError('으악 뭔가 이상해')
     #return HttpResponse('hello world')
 
