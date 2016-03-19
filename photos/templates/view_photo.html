@@ -6,6 +6,9 @@
     </head>
 
     <body>
+        {% addnim %}
+        작성자 : {{ request.user }}
+        {% end_add_nim %}
 
         {% for message in messsages %}
         <p>{{ message }}</p>
