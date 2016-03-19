@@ -1,7 +1,10 @@
 from django.db import models
 from django.conf import settings
 from django.db.models.signals import post_delete
+from django.db.models.signals import post_save
 from django.dispatch import receiver
+
+from taskqueue import make_thumbnail
 
 
 class Photo(models.Model):
@@ -13,6 +16,12 @@ class Photo(models.Model):
 
     def __str__(self):
         return str(self.pk)
+
+
+@receiver(post_save, sender=Photo)
+def make_thumbnail_image(sender, **kwargs):
+    instance = kwargs.pop('instance')
+    make_thumbnail.delay(instance.image.path, 80, 80)
 
 
 @receiver(post_delete, sender=Photo)
