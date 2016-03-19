@@ -2,11 +2,14 @@ import logging
 
 from django.contrib import messages
 from django.shortcuts import render
+from django.shortcuts import redirect
 from django.shortcuts import get_object_or_404
+from django.contrib.auth.decorators import login_required
 #from django.http import HttpResponse
 
 #from pystagram.middlewares import HelloWorldError
 from .models import Photo
+from .models import Like
 
 
 logger = logging.getLogger('django')
@@ -32,4 +35,31 @@ def view_photo(request, pk):
             'photo': photo,
     }
     return render(request, 'view_photo.html', ctx)
+
+
+@login_required
+def like_photo(request, pk):
+    photo = get_object_or_404(Photo, pk=pk)
+
+    like, is_created = Like.objects.get_or_create(
+        user=request.user,
+        photo=photo,
+        defaults={
+            'user': request.user,
+            'photo': photo,
+            'status': True,
+        }
+    )
+    if is_created is False:
+        like.status = not like.status
+        like.save()
+        if like.status is True:
+            messages.info(request, '좋아요 표식을 남겼습니다.')
+        else:
+            messages.info(request, '좋아요 표식을 취소했습니다.')
+    else:
+        messages.info(request, '좋아요 표식을 남겼습니다..')
+
+    return redirect('photos:view_photo', pk=photo.pk)
+
 

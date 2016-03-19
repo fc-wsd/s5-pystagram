@@ -1,5 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{{ photo.pk }}번 사진 게시물</title>
+    </head>
 
-    {% for msg in messages %}
-    <p>{{ msg }}</p>
-    {% endfor %}
+    <body>
 
+        {% for message in messsages %}
+        <p>{{ message }}</p>
+        {% endfor %}
+
+        <p>
+        <img src="{{ photo.image.url }}" />
+        </p>
+
+        <p>
+            <a href="{% url 'photos:like_photo' pk=photo.pk %}">좋아요</a>
+        </p>
+
+        <div>
+            {{ photo.content }}
+        </div>
+
+
+    </body>
+</html>
