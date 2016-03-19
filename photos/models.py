@@ -1,5 +1,7 @@
 from django.db import models
 from django.conf import settings
+from django.db.models.signals import post_delete
+from django.dispatch import receiver
 
 
 class Photo(models.Model):
@@ -8,6 +10,15 @@ class Photo(models.Model):
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return str(self.pk)
+
+
+@receiver(post_delete, sender=Photo)
+def delete_attached_image(sender, **kwargs):
+    instance = kwargs.pop('instance')
+    instance.image.delete(save=False)
 
 
 class Comment(models.Model):

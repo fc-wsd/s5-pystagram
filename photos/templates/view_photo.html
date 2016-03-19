@@ -7,12 +7,9 @@
 
     <body>
         {% addnim %}
-        작성자 : {{ request.user }}
+        <p>작성자 : {{ photo.user }}</p>
+        <p>접속자 : {{ request.user }}</p>
         {% end_add_nim %}
-
-        {% for message in messsages %}
-        <p>{{ message }}</p>
-        {% endfor %}
 
         <p>
         <img src="{{ photo.image.url }}" />
