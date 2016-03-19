@@ -32,7 +32,7 @@ def toppage(request):
 def view_photo(request, pk):
     photo = get_object_or_404(Photo, pk=pk)
     ctx = {
-            'photo': photo,
+        'photo': photo,
     }
     return render(request, 'view_photo.html', ctx)
 
