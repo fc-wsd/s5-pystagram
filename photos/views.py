@@ -7,12 +7,26 @@ from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
 #from django.http import HttpResponse
 
+from rest_framework import serializers
+from rest_framework import viewsets
+
 #from pystagram.middlewares import HelloWorldError
 from .models import Photo
 from .models import Like
 
 
 logger = logging.getLogger('django')
+
+
+class PhotoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Photo
+        fields = ('id', 'image', 'content', 'created_at', )
+
+
+class PhotoViewSet(viewsets.ModelViewSet):
+    queryset = Photo.objects.order_by('-id')
+    serializer_class = PhotoSerializer
 
 
 def toppage(request):
